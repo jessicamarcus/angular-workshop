@@ -17,6 +17,7 @@
 </head>
 <body ng-app="Demo">
 
+<!--declare which controller is linked to this element-->
 <div class="container" ng-controller="MainCtrl">
     <h1>Welcome {{ name }}</h1>
 </div>
@@ -33,7 +34,7 @@
     <ul class="js-localUsers">
         <li ng-repeat="user in localUsers | filter:search">{{ user.firstName }} {{ user.lastName }}</li>
     </ul>
-    
+    <!--view will update upon change in localUsers array-->
     <p><a class="js-addLocalUser" ng-click="addUser()" ng-href="">Add User</a></p>
 </div>
 
@@ -61,6 +62,7 @@
             <input type="text" class="form-control" id="lastName" ng-model="user.lastName" required>
         </div>
 
+        <!--this is piggybacking on html5 form validation; disable button if required fields are not filled out-->
         <button type="submit" class="btn btn-primary" ng-disabled="createUserForm.$invalid">Submit</button>
     </form>
 </div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Angular Demo</title>
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="helloapp.js"></script>
+</head>
+<body ng-app="HelloWorld">
+
+<div class="content-container" ng-controller="FormInputCtrl">
+    <!--toggling truthiness of directive ng-show toggles css class ng-hide-->
+    <!--ng-hide removes element from flow via display: none-->
+    <div ng-show="!showPage">
+        <h1>Welcome {{ userInput.name }}</h1>
+        <!--ng-focus directive used to clear field-->
+        <!--how to visually clear field without affecting in two-way binding?-->
+        <p><input type="text" ng-model="userInput.name" ng-focus="userInput.name = ''"></p>
+    </div>
+</div>
+
+
+<input type="button" value="toggle page content" ng-click="showPage = !showPage">
+<input type="button" value="show me something magical" ng-click="showHippo = !showHippo">
+
+<div ng-controller="ColorCtrl">
+    <input type="radio" value="red" ng-model="color"> Red <br>
+    <input type="radio" value="green" ng-model="color"> Green <br>
+    <input type="radio" value="blue" ng-model="color"> Blue <br>
+
+    <div class="color-swatch" ng-style="{'background-color': color}">
+        {{color}}
+    </div>
+
+</div>
+
+<div class="hippo-container">
+    <!--ng-show defaults to hidden; set value to falsey in order to be visible on pageload-->
+    <img ng-show="showHippo" src="hippo.jpg" alt="worst cat ever.">
+</div>
+
+</body>
+</html>

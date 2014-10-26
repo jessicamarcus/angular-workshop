@@ -3,13 +3,27 @@
 <head>
 <meta charset="utf-8">
 <title>Angular Demo</title>
+<link type="text/css" rel="stylesheet" href="style.css">
 <script src="bower_components/angular/angular.js"></script>
 </head>
 <body ng-app>
 
-<h1 ng-init="person = {name: 'dan'}">Welcome {{ person.name }}</h1>
+<div class="content-container">
+    <!--toggling truthiness of directive ng-show toggles css class ng-hide-->
+    <!--ng-hide removes element from flow via display: none-->
+    <div ng-show="!showPage">
+        <h1 ng-init="person = {name: 'Dan'}">Welcome {{ person.name }}</h1>
+        <p><input type="text" ng-model="person.name"></p>
+    </div>
+</div>
 
-<p><input type="text" ng-model="person.name"></p>
+<input type="button" value="toggle page content" ng-click="showPage = !showPage">
+<input type="button" value="show me something magical" ng-click="showHippo = !showHippo">
+
+<div class="hippo-container">
+    <!--ng-show defaults to hidden; set value to falsey in order to be visible on pageload-->
+    <img ng-show="showHippo" src="hippo.jpg" alt="worst cat ever.">
+</div>
 
 </body>
 </html>

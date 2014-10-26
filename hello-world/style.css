@@ -1,0 +1,23 @@
+body {
+  padding: 10px;
+}
+
+.content-container {
+  padding: 10px;
+  height: 100px;
+}
+
+.hippo-container {
+  padding: 10px;
+}
+
+.color-swatch {
+  width: 200px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  opacity: 0.5;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 20px;
+}

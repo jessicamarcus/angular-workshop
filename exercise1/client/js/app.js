@@ -4,7 +4,9 @@ angular.module('Demo', []);
 // main controller
 angular.module('Demo').controller('MainCtrl', function($scope) {
     'use strict';
-
+    //scope is more like a view model than a plain model
+    //it allows the view to have knowledge of the data
+    //literally declares what the scope will be for a given module
     $scope.name = 'Dan';
 });
 
