@@ -44,22 +44,56 @@
     <h2>Remote Users</h2>
     
     <ul>
-        <li ng-repeat="user in remoteUsers">{{ user.firstName }} {{ user.lastName }} <a ng-click="deleteUser(user)">Delete</a></li>
+        <li ng-repeat="user in remoteUsers">{{ user.firstName }} {{ user.lastName }}<br>
+            Age: {{ user.age }}<br>
+            {{ user.emailAddress }}<br>
+            Username: {{ user.username }}<br>
+            <a ng-click="deleteUser(user)">Delete {{ user.firstName }}</a></li>
     </ul>
     
     <p><a ng-click="showForm = !showForm" ng-href=""><span ng-show="!showForm">Create User</span><span ng-show="showForm">Hide Form</span></a></p>
     
-    <form role="form" name="createUserForm" ng-submit="createUser(user)" ng-show="showForm" novalidate>
+    <form role="form" name="createUserForm" ng-submit="createUser(user)" ng-show="showForm">
         <br>
         
         <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" ng-model="user.firstName" required>
+            <input type="text" name="first" class="form-control" id="firstName" ng-model="user.firstName" required>
+            <span class="error" ng-show="createUserForm.first.$error.required">Required</span>
         </div>
         
         <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" ng-model="user.lastName" required>
+            <input type="text" name="last" class="form-control" id="lastName" ng-model="user.lastName" required>
+            <span class="error" ng-show="createUserForm.last.$error.required">Required</span>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" name="age" class="form-control" id="age" ng-model="user.age" min="18" max="120" required>
+            <span class="error" ng-show="createUserForm.age.$error.required">Required</span>
+            <span class="error" ng-show="createUserForm.age.$error.min || createUserForm.age.$error.min">Please enter an age between 18 and 120.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="emailAddress">Email Address</label>
+            <input type="email" name="email" class="form-control" id="emailAddress" ng-model="user.emailAddress" required>
+            <span class="error" ng-show="createUserForm.email.$error.required">Required</span>
+            <!--TODO: what am i missing here?-->
+            <span class="error" ng-show="createUserForm.email.$error.email">Please enter a valid email address</span>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="user" class="form-control" id="username" ng-model="user.username" ng-minlength="8" required>
+            <span class="error" ng-show="createUserForm.user.$error.required">Required</span>
+            <span class="error" ng-show="createUserForm.user.$error.minlength">Usernames must be at least 8 characters long</span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="pass" class="form-control" id="password" ng-model="user.password" required>
+            <span class="error" ng-show="createUserForm.pass.$error.required">Required</span>
         </div>
 
         <!--this is piggybacking on html5 form validation; disable button if required fields are not filled out-->
