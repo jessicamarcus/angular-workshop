@@ -6,12 +6,10 @@ angular.module('HelloWorld').controller('FormInputCtrl', function ($scope) {
     $scope.userInput = {
         name: 'Dan'
     };
-
 });
 
 angular.module('HelloWorld').controller('ColorCtrl', function ($scope) {
     'use strict';
 
     $scope.color = 'red';
-
 });

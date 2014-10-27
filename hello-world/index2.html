@@ -13,7 +13,7 @@
     <!--toggling truthiness of directive ng-show toggles css class ng-hide-->
     <!--ng-hide removes element from flow via display: none-->
     <div ng-show="!showPage">
-        <h1>Welcome {{ userInput.name }}</h1>
+        <h1>Welcome {{ userInput.name | uppercase }}</h1>
         <!--ng-focus directive used to clear field-->
         <!--how to visually clear field without affecting in two-way binding?-->
         <p><input type="text" ng-model="userInput.name" ng-focus="userInput.name = ''"></p>
