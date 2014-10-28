@@ -48,13 +48,14 @@
                 <thead>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th></th>
+                    <th>Age</th>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="user in remoteUsers">
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
+                        <td>{{ user.age }}</td>
                         <td><a ng-click="editUser(user)">Edit</a> | <a ng-click="deleteUser(user)">Delete</a></td>
                     </tr>
                 </tbody>
@@ -70,6 +71,11 @@
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
                     <input type="text" class="form-control" id="lastName" ng-model="user.lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" class="form-control" id="age" ng-model="user.age" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" ng-disabled="createUserForm.$invalid">Submit</button>

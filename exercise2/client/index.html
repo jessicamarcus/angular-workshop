@@ -57,6 +57,7 @@
         
                 <div class="form-group">
                     <label>Category</label>
+                    <!--ng-options-->
                     <select class="form-control" ng-model="task.category" ng-options="category.id as category.name for category in categories">
                         <option value="">Select One</option>
                     </select>
@@ -70,6 +71,7 @@
         <div class="col-md-6" ng-controller="ListCtrl">
             <div id="taskList">
                 <ul>
+                    <!--ng-class lets you specify css classes to be added/removed to elements-->
                     <li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.status === 2}">{{ task.name }}</li>
                 </ul>
             </div>

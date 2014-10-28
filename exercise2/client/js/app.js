@@ -1,11 +1,14 @@
 // initialize the app
-angular.module('TaskManager', []).run(function(TaskFactory) {
+angular.module('TaskManager', []).run(function(TaskFactory) { //load in the tasks as soon as we load the page
     TaskFactory.fetch();
 });
 
 angular.module('TaskManager').constant('ServerUrl', 'http://localhost:3000/');
 
 angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) {
+    //factories are used to share data between different controllers
+
+    //this collection is maintained throughout the life of the application; it's where the tasks are actually stored
     var tasks = [];
 
     var fetch = function() {
@@ -17,12 +20,14 @@ angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) 
         });
     };
 
+    //other parts of the application can use these since we're exposing them
     return {
         tasks: tasks,
         fetch: fetch
     };
 });
 
+//below we're injecting the TaskFactory so that this controller can make use of it
 angular.module('TaskManager').controller('FormCtrl', function($scope, $http, ServerUrl, TaskFactory, $q) {
     'use strict';
 
@@ -30,6 +35,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
         $scope.categories = response;
     });
 
+    //changes in the controller will change the tasks in the TaskFactory
     $scope.tasks = TaskFactory.tasks;
 
     $scope.createCategory = function(category) {
@@ -39,7 +45,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
             $scope.categories.push(response);
 
             $scope.category.name = '';
-
+            //as soon as this changes, html will update
             $scope.task.category = response.id;
         });
     };
@@ -54,6 +60,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
     };
 
     $scope.removeCompleted = function() {
+        //gather all requests going out to the server
         var httpRequests = [];
 
         for (var i = 0; i < $scope.tasks.length; i++) {
@@ -62,7 +69,9 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
             }
         }
 
+        //when all requests are complete,
         $q.all(httpRequests).then(function() {
+            //update list with the most current tasks
             TaskFactory.fetch();
         });
     };
@@ -74,7 +83,8 @@ angular.module('TaskManager').controller('ListCtrl', function($scope, $http, Ser
     $scope.tasks = TaskFactory.tasks;
 
     $scope.completeTask = function(task) {
-        task.status = 2;
+        //toggle between completed/not completed states
+        task.status === 2 ? task.status = 0 : task.status = 2;
 
         $http.put(ServerUrl + 'tasks/' + task.id, task);
     };

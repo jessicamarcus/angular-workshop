@@ -72,7 +72,7 @@
             <label for="age">Age</label>
             <input type="number" name="age" class="form-control" id="age" ng-model="user.age" min="18" max="120" required>
             <span class="error" ng-show="createUserForm.age.$error.required">Required</span>
-            <span class="error" ng-show="createUserForm.age.$error.min || createUserForm.age.$error.min">Please enter an age between 18 and 120.</span>
+            <span class="error" ng-show="createUserForm.age.$error.min || createUserForm.age.$error.max">Please enter an age between 18 and 120.</span>
         </div>
 
         <div class="form-group">

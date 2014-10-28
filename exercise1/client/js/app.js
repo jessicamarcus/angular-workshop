@@ -47,6 +47,7 @@ angular.module('Demo').controller('RemoteUserCtrl', function($scope, $http, Serv
         $http.post(ServerUrl + 'users', user).success(function(response) {
             $scope.remoteUsers.push(response);
 
+            //empty formfields after submission success
             $scope.user = {};
         });
     };
@@ -55,6 +56,7 @@ angular.module('Demo').controller('RemoteUserCtrl', function($scope, $http, Serv
         $http.delete(ServerUrl + 'users/' + user.id).success(function(response) {
             // remove from users array by id
             for (var i = 0; i < $scope.remoteUsers.length; i++){
+                //loop thru array; when it finds the user remove by using splice
                 if ($scope.remoteUsers[i].id == user.id) {
                     $scope.remoteUsers.splice(i, 1);
 
