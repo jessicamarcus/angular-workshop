@@ -14,7 +14,7 @@ angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) 
     var fetch = function() {
         $http.get(ServerUrl + 'tasks').success(function(response) {
             // use angular.copy() to retain the original array which the controllers are bound to
-            // tasks = response will overwrite the array with a new one and the controllers loose the reference
+            // tasks = response will overwrite the array with a new one and the controllers lose the reference
             // could also do tasks.length = 0, then push in the new items
             angular.copy(response, tasks);
         });
@@ -56,6 +56,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
 
             $scope.task.name = '';
             $scope.task.category = '';
+            $scope.task.isCompleted = false;
         });
     };
 
@@ -64,7 +65,8 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
         var httpRequests = [];
 
         for (var i = 0; i < $scope.tasks.length; i++) {
-            if ($scope.tasks[i].status === 2) {
+            //if ($scope.tasks[i].status === 2) {
+            if ($scope.tasks[i].isCompleted === true) {
                 httpRequests.push($http.delete(ServerUrl + 'tasks/' + $scope.tasks[i].id));
             }
         }
@@ -84,7 +86,8 @@ angular.module('TaskManager').controller('ListCtrl', function($scope, $http, Ser
 
     $scope.completeTask = function(task) {
         //toggle between completed/not completed states
-        task.status === 2 ? task.status = 0 : task.status = 2;
+        //task.status === 2 ? task.status = 0 : task.status = 2;
+        task.isCompleted === true ? task.isCompleted = false : task.isCompleted = true;
 
         $http.put(ServerUrl + 'tasks/' + task.id, task);
     };

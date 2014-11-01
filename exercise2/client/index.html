@@ -72,7 +72,8 @@
             <div id="taskList">
                 <ul>
                     <!--ng-class lets you specify css classes to be added/removed to elements-->
-                    <li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.status === 2}">{{ task.name }}</li>
+                    <!--<li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.status === 2}">{{ task.name }}</li>-->
+                    <li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.isCompleted === true}">{{ task.name }}</li>
                 </ul>
             </div>
         </div>
