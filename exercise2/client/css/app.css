@@ -2,7 +2,7 @@ body {
     padding-top: 50px;
 }
 
-a, #taskList li {
+a, #taskList #catList li {
     cursor: pointer;
 }
 

@@ -27,7 +27,7 @@ Your manager comes to you with a new feature request. She wants to see the categ
 ~~Issue 4~~:
 Your colleague points out that createTask and removeCompleted are really functions that ought to be the responsibility of the TaskFactory and not in the controller. Refactor the business logic and REST calls out of the controller and into the TaskFactory, so that you can call TaskFactory.create(taskObject) from inside $scope.createTask, and just use the controller to wire these functions to the view.
 
-Issue 5:
+~~Issue 5~~:
 Your product owner comes to you with ideas for a UI that shows the existing categories on the screen and each one is clickable. When one category is selected, only tasks belonging to that category are displayed in the list. When no category is selected, all tasks are displayed.  (Hints: save the selected category as $scope.selectedCategory, and use ng-repeat with a filter to show only a subset of tasks. Stuck? look at the [angular documentation for filter filter](https://docs.angularjs.org/api/ng/filter/filter) or search stack overflow for [examples](http://stackoverflow.com/questions/17793751/how-to-filter-by-object-property-in-angularjs).)
 
 Issue 6:

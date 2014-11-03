@@ -118,5 +118,7 @@ angular.module('TaskManager').controller('ListCtrl', function($scope, $http, Ser
 
         $http.put(ServerUrl + 'tasks/' + task.id, task);
     };
+    //why can't this be a string??
+    $scope.selectedCategory = {};
 });
 

@@ -80,7 +80,12 @@
             <div id="catList">
                 <h3>Category List</h3>
                 <ul>
-                    <li ng-repeat="category in categories">{{category.name}}</li>
+                    <li ng-repeat="category in categories"><a href="#" ng-click="selectedCategory.name = category.name; selectedCategory.id = category.id">{{category.name}}</a></li>
+                </ul>
+
+                <h3 ng-init="selectedCategory.name = 'Selected Category'; selectedCategory.id = null">All tasks marked {{selectedCategory.name}}:</h3>
+                <ul>
+                    <li ng-repeat="task in tasks | filter:{category: selectedCategory.id}">{{task.name}}</li>
                 </ul>
             </div>
         </div>
