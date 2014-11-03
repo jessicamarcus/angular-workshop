@@ -1,9 +1,23 @@
 // initialize the app
-angular.module('TaskManager', []).run(function(TaskFactory) { //load in the tasks as soon as we load the page
+angular.module('TaskManager', []).run(function(TaskFactory, CatFactory) { //load in the tasks as soon as we load the page
     TaskFactory.fetch();
+    CatFactory.fetch();
 });
 
 angular.module('TaskManager').constant('ServerUrl', 'http://localhost:3000/');
+
+angular.module('TaskManager').factory('CatFactory', function ($http, ServerUrl) {
+    var categories = [],
+        fetch = function () {
+            $http.get(ServerUrl + 'categories').success(function (response) {
+                angular.copy(response, categories);
+            });
+        };
+    return {
+        categories: categories,
+        fetch: fetch
+    };
+});
 
 angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) {
     //factories are used to share data between different controllers
@@ -28,13 +42,12 @@ angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) 
 });
 
 //below we're injecting the TaskFactory so that this controller can make use of it
-angular.module('TaskManager').controller('FormCtrl', function($scope, $http, ServerUrl, TaskFactory, $q) {
+angular.module('TaskManager').controller('FormCtrl', function($scope, $http, ServerUrl, TaskFactory, CatFactory, $q) {
     'use strict';
-
-    $http.get(ServerUrl + 'categories').success(function(response) {
-        $scope.categories = response;
-    });
-
+    //$http.get(ServerUrl + 'categories').success(function(response) {
+    //    $scope.categories = response;
+    //});
+    $scope.categories = CatFactory.categories;
     //changes in the controller will change the tasks in the TaskFactory
     $scope.tasks = TaskFactory.tasks;
 
@@ -45,7 +58,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
             $scope.categories.push(response);
 
             $scope.category.name = '';
-            //as soon as this changes, html will update
+            //as soon as this changes, html dropdown will update
             $scope.task.category = response.id;
         });
     };
@@ -79,10 +92,11 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
     };
 });
 
-angular.module('TaskManager').controller('ListCtrl', function($scope, $http, ServerUrl, TaskFactory) {
+angular.module('TaskManager').controller('ListCtrl', function($scope, $http, ServerUrl, TaskFactory, CatFactory) {
     'use strict';
 
     $scope.tasks = TaskFactory.tasks;
+    $scope.categories = CatFactory.categories;
 
     $scope.completeTask = function(task) {
         //toggle between completed/not completed states
@@ -92,3 +106,4 @@ angular.module('TaskManager').controller('ListCtrl', function($scope, $http, Ser
         $http.put(ServerUrl + 'tasks/' + task.id, task);
     };
 });
+

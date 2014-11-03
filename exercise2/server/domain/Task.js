@@ -7,7 +7,7 @@ var Task = function(params) {
     this.name = params.name;
     this.category = params.category;
     //this.status = (typeof params.status === 'undefined') ? 0 : params.status; // ['open', 'in-progress', 'completed']
-    this.isCompleted = params.isCompleted !== false;
+    this.isCompleted = params.isCompleted;
 };
 
 module.exports = Task;

@@ -70,10 +70,17 @@
 
         <div class="col-md-6" ng-controller="ListCtrl">
             <div id="taskList">
+                <h3>Task List</h3>
                 <ul>
                     <!--ng-class lets you specify css classes to be added/removed to elements-->
                     <!--<li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.status === 2}">{{ task.name }}</li>-->
                     <li ng-repeat="task in tasks" ng-click="completeTask(task)" ng-class="{completed: task.isCompleted === true}">{{ task.name }}</li>
+                </ul>
+            </div>
+            <div id="catList">
+                <h3>Category List</h3>
+                <ul>
+                    <li ng-repeat="category in categories">{{category.name}}</li>
                 </ul>
             </div>
         </div>
