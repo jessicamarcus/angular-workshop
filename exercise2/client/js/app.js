@@ -13,15 +13,24 @@ angular.module('TaskManager').factory('CatFactory', function ($http, ServerUrl) 
                 angular.copy(response, categories);
             });
         };
+    //var createCategory = function(category) {
+    //
+    //    $http.post(ServerUrl + 'categories', category).success(function(response) {
+    //        categories.push(response);
+    //
+    //        category.name = '';
+    //
+    //    });
+    //};
     return {
         categories: categories,
         fetch: fetch
+        //createCategory: createCategory
     };
 });
 
-angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) {
+angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl, $q) {
     //factories are used to share data between different controllers
-
     //this collection is maintained throughout the life of the application; it's where the tasks are actually stored
     var tasks = [];
 
@@ -33,16 +42,42 @@ angular.module('TaskManager').factory('TaskFactory', function($http, ServerUrl) 
             angular.copy(response, tasks);
         });
     };
+    var createTask = function (task) {
+        $http.post(ServerUrl + 'tasks', task).success(function(response) {
+            tasks.push(response);
+
+            task.name = '';
+            task.category = '';
+            task.isCompleted = false;
+        });
+    };
+    var removeCompleted = function() {
+        //gather all requests going out to the server
+        var httpRequests = [];
+
+        for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].isCompleted === true) {
+                httpRequests.push($http.delete(ServerUrl + 'tasks/' + tasks[i].id));
+            }
+        }
+        //when all requests are complete,
+        $q.all(httpRequests).then(function() {
+            //update list with the most current tasks
+            fetch();
+        });
+    };
 
     //other parts of the application can use these since we're exposing them
     return {
         tasks: tasks,
-        fetch: fetch
+        fetch: fetch,
+        createTask: createTask,
+        removeCompleted: removeCompleted
     };
 });
 
 //below we're injecting the TaskFactory so that this controller can make use of it
-angular.module('TaskManager').controller('FormCtrl', function($scope, $http, ServerUrl, TaskFactory, CatFactory, $q) {
+angular.module('TaskManager').controller('FormCtrl', function($scope, $http, ServerUrl, TaskFactory, CatFactory) {
     'use strict';
     //$http.get(ServerUrl + 'categories').success(function(response) {
     //    $scope.categories = response;
@@ -51,6 +86,7 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
     //changes in the controller will change the tasks in the TaskFactory
     $scope.tasks = TaskFactory.tasks;
 
+    //$scope.createCategory = CatFactory.createCategory;
     $scope.createCategory = function(category) {
         $scope.task = {};
 
@@ -63,33 +99,10 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
         });
     };
 
-    $scope.createTask = function(task) {
-        $http.post(ServerUrl + 'tasks', task).success(function(response) {
-            $scope.tasks.push(response);
+    $scope.createTask = TaskFactory.createTask;
 
-            $scope.task.name = '';
-            $scope.task.category = '';
-            $scope.task.isCompleted = false;
-        });
-    };
+    $scope.removeCompleted = TaskFactory.removeCompleted;
 
-    $scope.removeCompleted = function() {
-        //gather all requests going out to the server
-        var httpRequests = [];
-
-        for (var i = 0; i < $scope.tasks.length; i++) {
-            //if ($scope.tasks[i].status === 2) {
-            if ($scope.tasks[i].isCompleted === true) {
-                httpRequests.push($http.delete(ServerUrl + 'tasks/' + $scope.tasks[i].id));
-            }
-        }
-
-        //when all requests are complete,
-        $q.all(httpRequests).then(function() {
-            //update list with the most current tasks
-            TaskFactory.fetch();
-        });
-    };
 });
 
 angular.module('TaskManager').controller('ListCtrl', function($scope, $http, ServerUrl, TaskFactory, CatFactory) {
