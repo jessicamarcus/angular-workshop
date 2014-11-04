@@ -1,4 +1,4 @@
-describe('Controller: Exercise3', function() {
+describe('Exercise3', function() {
     'use strict';
 
     var NavbarCtrl,
@@ -6,10 +6,11 @@ describe('Controller: Exercise3', function() {
         $location,
         capitalizeFilter;
 
-    // mock the controller's module
+    // mock the app module
     beforeEach(angular.mock.module('Exercise3'));
 
     // initialize the controller and a mock scope
+    //the underscores are so we can use the same name within our tests
     beforeEach(angular.mock.inject(function($controller, $rootScope, _$location_) {
         scope = $rootScope.$new();
 
@@ -36,10 +37,14 @@ describe('Controller: Exercise3', function() {
         expect(scope.isActive('/contact')).toBe(false);
     });
 
-    it('capitalize filter should calitalize first letter in a string', function() {
-        inject(function(capitalizeFilter) {
-            expect(capitalizeFilter('dan')).not.toBe('dan');
-            expect(capitalizeFilter('dan')).toBe('Dan');
-        });
+    it('silly filter should be totally ridiculous', function() {
+        //angular magic! [name of filter]Filter
+        //inject(function(capitalizeFilter) {
+        //    expect(capitalizeFilter('dan')).not.toBe('dan');
+        //    expect(capitalizeFilter('dan')).toBe('Dan');
+        //});
+        inject(function (sillyFilter) {
+            expect(sillyFilter('hello')).toBe('hElLo');
+        })
     });
 });

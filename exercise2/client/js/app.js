@@ -13,19 +13,14 @@ angular.module('TaskManager').factory('CatFactory', function ($http, ServerUrl) 
                 angular.copy(response, categories);
             });
         };
-    //var createCategory = function(category) {
-    //
-    //    $http.post(ServerUrl + 'categories', category).success(function(response) {
-    //        categories.push(response);
-    //
-    //        category.name = '';
-    //
-    //    });
-    //};
+    var createCategory = function(category) {
+        return $http.post(ServerUrl + 'categories', category).success(function(response) {
+        });
+    };
     return {
         categories: categories,
-        fetch: fetch
-        //createCategory: createCategory
+        fetch: fetch,
+        createCategory: createCategory
     };
 });
 
@@ -89,14 +84,20 @@ angular.module('TaskManager').controller('FormCtrl', function($scope, $http, Ser
     //$scope.createCategory = CatFactory.createCategory;
     $scope.createCategory = function(category) {
         $scope.task = {};
-
-        $http.post(ServerUrl + 'categories', category).success(function(response) {
-            $scope.categories.push(response);
-
+        var promise = CatFactory.createCategory(category);
+        promise.then(function (response) {
+            $scope.categories.push(response.data);
             $scope.category.name = '';
-            //as soon as this changes, html dropdown will update
-            $scope.task.category = response.id;
+            $scope.task.category = response.data.id;
         });
+        //
+        //$http.post(ServerUrl + 'categories', category).success(function(response) {
+        //    $scope.categories.push(response);
+        //
+        //    $scope.category.name = '';
+        //    //as soon as this changes, html dropdown will update
+        //    $scope.task.category = response.id;
+        //});
     };
 
     $scope.createTask = TaskFactory.createTask;

@@ -85,7 +85,7 @@
 
                 <h3 ng-init="selectedCategory.name = 'Selected Category'; selectedCategory.id = null">All tasks marked {{selectedCategory.name}}:</h3>
                 <ul>
-                    <li ng-repeat="task in tasks | filter:{category: selectedCategory.id}">{{task.name}}</li>
+                    <li ng-repeat="task in tasks | filter:{category: selectedCategory.id}" ng-class="{}">{{task.name}}</li>
                 </ul>
             </div>
         </div>
