@@ -21,7 +21,7 @@ describe('Exercise3', function() {
         });
     }));
 
-    it('isActive() should return true if when passed the current location', function() {
+    it('isActive() should return true when passed the current location', function() {
         $location.path('/about');
 
         expect($location.path()).toBe('/about');
@@ -29,7 +29,7 @@ describe('Exercise3', function() {
         expect(scope.isActive('/about')).toBe(true);
     });
 
-    it('isActive() should return false if when passed a different location', function() {
+    it('isActive() should return false when passed a different location', function() {
         $location.path('/about');
 
         expect($location.path()).toBe('/about');
