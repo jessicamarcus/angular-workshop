@@ -3,7 +3,6 @@ angular.module('Exercise3.filters', []);
 angular.module('Exercise3', [
     //dependencies
     'ngRoute',
-
     'Exercise3.filters'
 ]);
 
@@ -42,8 +41,8 @@ angular.module('Exercise3.filters').filter('capitalize', function() {
         }
     };
 });
-angular.module('Exercise3.filters').filter('silly', function() {
-    return function(param) {
+angular.module('Exercise3.filters').filter('silly', function () {
+    return function (param) {
         if (param) {
             var character = '',
                 processedString = '';

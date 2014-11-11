@@ -19,11 +19,21 @@
 <div class="container" ng-controller="DemoCtrl">
     <h1>Directives Demo</h1>
 
+    <demo-direct></demo-direct>
+
     <demo-lorem></demo-lorem>
 
     <p demo-clickable>I can be clicked</p>
 
+    <p demo-dir-event>Touch me for a cute hippo</p>
+
+    <p id="hippo"></p>
+
     <demo-feedback placeholder="What did you think?" submit-action="alertFeedback(feedback)"></demo-feedback>
+    <!--submit-action is the return function specified in the directive-->
+    <demo-feedback placeholder="How do you feel?" submit-action="alertFeedback(feedback)"></demo-feedback>
+
+    <demo-form userinput="Fake data" submit-action="helloFeedback(feedback)"></demo-form>
 </div>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
